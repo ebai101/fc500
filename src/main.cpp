@@ -1,11 +1,9 @@
 /*
-mode 1
+mode 1 - scene/preset select
 1-4: CC#1 scene select 1-4
 5-8: CC#0/PGM preset select 1-4
-b: CC#11 tap tempo
-c: CC#2 fx return
 
-mode 2
+mode 2 - toggle block bypass
 1: CC#3 drive 1
 2: CC#4 drive 2
 3: CC#5 chorus
@@ -15,8 +13,9 @@ mode 2
 7: CC#9 delay 1
 8: CC#10 delay 2
 
-b: tap tempo
-c: fx return
+both modes
+b: CC#11 tap tempo
+c: CC#2 toggle fx return
 */
 
 #include <Arduino.h>
