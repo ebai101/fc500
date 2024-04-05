@@ -89,6 +89,7 @@ void loop()
 {
   modeFootswitch->update();
 
+  // if in preset mode, update preset mode switches
   if (!modeFootswitch->getCurrentMode())
   {
     for (int i = 0; i < SWITCH_COUNT; i++)
@@ -108,6 +109,7 @@ void loop()
       }
     }
   }
+  // otherwise update stomp mode switches
   else
   {
     for (int i = 0; i < SWITCH_COUNT; i++)

@@ -26,14 +26,12 @@ void ModeFootswitch::update()
             }
             if (currentMode)
             {
-                presetMode();
                 digitalWrite(ledPin, LOW);
                 digitalWrite(ledPin2, HIGH);
                 currentMode = 0;
             }
             else
             {
-                stompMode();
                 digitalWrite(ledPin, HIGH);
                 digitalWrite(ledPin2, LOW);
                 currentMode = 1;
@@ -49,12 +47,4 @@ void ModeFootswitch::update()
 bool ModeFootswitch::getCurrentMode()
 {
     return currentMode;
-}
-
-void ModeFootswitch::presetMode()
-{
-}
-
-void ModeFootswitch::stompMode()
-{
 }
