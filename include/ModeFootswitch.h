@@ -16,6 +16,9 @@ public:
     int ledPin2;
 
 private:
+    const int presetLEDs[4] = {7, 8, 9, 10};
+    const int sceneLEDs[4] = {2, 3, 4, 5};
+
     bool currentMode;
     void presetMode();
     void stompMode();

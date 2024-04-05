@@ -19,17 +19,22 @@ void ModeFootswitch::update()
         if (footswitch.fallingEdge())
         {
             Serial.printf("%c pressed\n", letter);
+            for (int i = 0; i < 4; i++)
+            {
+                digitalWrite(presetLEDs[i], HIGH);
+                digitalWrite(sceneLEDs[i], HIGH);
+            }
             if (currentMode)
             {
                 presetMode();
-                digitalWrite(ledPin, HIGH);
+                digitalWrite(ledPin, LOW);
                 digitalWrite(ledPin2, HIGH);
                 currentMode = 0;
             }
             else
             {
                 stompMode();
-                digitalWrite(ledPin, LOW);
+                digitalWrite(ledPin, HIGH);
                 digitalWrite(ledPin2, LOW);
                 currentMode = 1;
             }

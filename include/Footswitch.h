@@ -27,9 +27,6 @@ public:
     Bounce footswitch;
     int ledPin;
 
-    const int presetLEDs[4] = {7, 8, 9, 10};
-    const int sceneLEDs[4] = {2, 3, 4, 5};
-
 private:
     int preset;
     int scene;
@@ -38,6 +35,9 @@ private:
     int tapTempoCC;
     CCMessage ccMsg;
     int pgmMsg;
+
+    const int presetLEDs[4] = {7, 8, 9, 10};
+    const int sceneLEDs[4] = {2, 3, 4, 5};
 
     void selectPreset();
     void selectScene();

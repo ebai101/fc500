@@ -87,21 +87,38 @@ void setup()
 
 void loop()
 {
-  for (int i = 0; i < SWITCH_COUNT; i++)
+  modeFootswitch->update();
+
+  if (!modeFootswitch->getCurrentMode())
   {
-    switchesPresetMode[i]->update();
-    if (switchesPresetMode[i]->hasCC())
+    for (int i = 0; i < SWITCH_COUNT; i++)
     {
-      CCMessage msg = switchesPresetMode[i]->getCC();
-      Serial.printf("sending cc %d %d\n", msg.cc, msg.val);
-      MIDI.sendControlChange(msg.cc, msg.val, 1);
-    }
-    if (switchesPresetMode[i]->hasPgm())
-    {
-      int msg = switchesPresetMode[i]->getPgm();
-      Serial.printf("sending pgm %d %d\n", msg);
-      MIDI.sendProgramChange(msg, 1);
+      switchesPresetMode[i]->update();
+      if (switchesPresetMode[i]->hasCC())
+      {
+        CCMessage msg = switchesPresetMode[i]->getCC();
+        Serial.printf("sending cc %d %d\n", msg.cc, msg.val);
+        MIDI.sendControlChange(msg.cc, msg.val, 1);
+      }
+      if (switchesPresetMode[i]->hasPgm())
+      {
+        int msg = switchesPresetMode[i]->getPgm();
+        Serial.printf("sending pgm %d %d\n", msg);
+        MIDI.sendProgramChange(msg, 1);
+      }
     }
   }
-  modeFootswitch->update();
+  else
+  {
+    for (int i = 0; i < SWITCH_COUNT; i++)
+    {
+      switchesStompMode[i]->update();
+      if (switchesStompMode[i]->hasCC())
+      {
+        CCMessage msg = switchesStompMode[i]->getCC();
+        Serial.printf("sending cc %d %d\n", msg.cc, msg.val);
+        MIDI.sendControlChange(msg.cc, msg.val, 1);
+      }
+    }
+  }
 }
