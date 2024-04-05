@@ -2,7 +2,7 @@
 mode 1
 1-4: CC#1 scene select 1-4
 5-8: CC#0/PGM preset select 1-4
-b: tap tempo
+b: CC#11 tap tempo
 c: CC#2 fx return
 
 mode 2
@@ -52,6 +52,7 @@ void setup()
   switchesPresetMode[1]->setScene(2);
   switchesPresetMode[2]->setScene(3);
   switchesPresetMode[3]->setScene(4);
+  switchesPresetMode[4]->setTapCC(11);
   switchesPresetMode[5]->setToggleCC(2);
   switchesPresetMode[7]->setPreset(506);
   switchesPresetMode[8]->setPreset(509);
@@ -72,7 +73,7 @@ void setup()
   switchesStompMode[1]->setToggleCC(4);
   switchesStompMode[2]->setToggleCC(5);
   switchesStompMode[3]->setToggleCC(6);
-  // switchesStompMode[4]->setToggle(-1);
+  switchesStompMode[4]->setTapCC(11);
   switchesStompMode[5]->setToggleCC(2);
   switchesStompMode[6]->setToggleCC(7);
   switchesStompMode[7]->setToggleCC(8);
@@ -92,11 +93,13 @@ void loop()
     if (switchesPresetMode[i]->hasCC())
     {
       CCMessage msg = switchesPresetMode[i]->getCC();
+      Serial.printf("sending cc %d %d\n", msg.cc, msg.val);
       MIDI.sendControlChange(msg.cc, msg.val, 1);
     }
     if (switchesPresetMode[i]->hasPgm())
     {
       int msg = switchesPresetMode[i]->getPgm();
+      Serial.printf("sending pgm %d %d\n", msg);
       MIDI.sendProgramChange(msg, 1);
     }
   }

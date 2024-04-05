@@ -7,6 +7,7 @@ Footswitch::Footswitch(char letter, int footswitchPin, int ledPin) : letter(lett
                                                                      scene(-1),
                                                                      toggleCC(-1),
                                                                      toggleState(0),
+                                                                     tapTempoCC(-1),
                                                                      ccMsg({-1, -1}),
                                                                      pgmMsg(-1)
 {
@@ -29,6 +30,10 @@ void Footswitch::setToggleCC(int cc)
 {
     toggleCC = cc;
 }
+void Footswitch::setTapCC(int cc)
+{
+    tapTempoCC = cc;
+}
 
 void Footswitch::update()
 {
@@ -49,6 +54,10 @@ void Footswitch::update()
             else if (toggleCC > -1)
             {
                 toggle();
+            }
+            else if (tapTempoCC > -1)
+            {
+                tapTempo();
             }
         }
         else if (footswitch.risingEdge())
@@ -103,13 +112,25 @@ void Footswitch::toggle()
         return;
     }
 
-    // send CC#toggleCC 127 or 0 based on state
+    // send CC#toggleCC 127 or 0 based on toggle state
     toggleState = !toggleState;
     int cc = toggleState ? 127 : 0;
     ccMsg = {toggleCC, cc};
 
     // write LED state
     digitalWrite(ledPin, !toggleState);
+}
+
+void Footswitch::tapTempo()
+{
+    if (tapTempoCC == -1)
+    {
+        Serial.printf("no cc set for tapTempo switch %c\n", letter);
+        return;
+    }
+
+    // send CC#tapCC 0
+    ccMsg = {tapTempoCC, 0};
 }
 
 bool Footswitch::hasCC()

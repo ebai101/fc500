@@ -16,6 +16,7 @@ public:
     void setPreset(int p);
     void setScene(int s);
     void setToggleCC(int cc);
+    void setTapCC(int cc);
     void update();
     bool hasCC();
     bool hasPgm();
@@ -34,12 +35,14 @@ private:
     int scene;
     int toggleCC;
     bool toggleState;
+    int tapTempoCC;
     CCMessage ccMsg;
     int pgmMsg;
 
     void selectPreset();
     void selectScene();
     void toggle();
+    void tapTempo();
 };
 
 #endif // !FOOTSWITCH_H
