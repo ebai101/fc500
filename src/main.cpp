@@ -1,25 +1,19 @@
 /*
-mode 1 - scene/preset select
-1-4: CC#1 scene select 1-4
+mode 1 - "preset mode"
+sends CC/PGM combination for preset select, and CC for scene select
+1-4: CC#1 (scene select 1-4)
 5-8: CC#0/PGM preset select 1-4
 
-mode 2 - toggle block bypass
-1: CC#3 drive 1
-2: CC#4 drive 2
-3: CC#5 chorus
-4: CC#6 flanger
-5: CC#7 n/a
-6: CC#8 phaser
-7: CC#9 delay 1
-8: CC#10 delay 2
+mode 2 - "stomp mode"
+sends CCs for block bypass/other switch functions
+1-8: CC#3-10
 
 both modes
-b: CC#11 tap tempo
-c: CC#2 toggle fx return
+b: CC#11 (tap tempo)
+c: CC#2 (fx return bypass)
 */
 
 #include <Arduino.h>
-#include <Bounce.h>
 #include <MIDI.h>
 #include "Footswitch.h"
 #include "ModeFootswitch.h"
@@ -27,9 +21,6 @@ c: CC#2 toggle fx return
 #define SWITCH_COUNT 10
 
 MIDI_CREATE_INSTANCE(HardwareSerial, Serial5, MIDI);
-
-// main program
-
 Footswitch *switchesPresetMode[SWITCH_COUNT];
 Footswitch *switchesStompMode[SWITCH_COUNT];
 ModeFootswitch *modeFootswitch;
@@ -66,8 +57,8 @@ void setup()
   switchesStompMode[5] = new Footswitch('C', 28, 6);  // fx return
   switchesStompMode[6] = new Footswitch('5', 23, 7);  // n/a
   switchesStompMode[7] = new Footswitch('6', 22, 8);  // phaser
-  switchesStompMode[8] = new Footswitch('7', 21, 9);  // delay 1
-  switchesStompMode[9] = new Footswitch('8', 20, 10); // delay 2
+  switchesStompMode[8] = new Footswitch('7', 21, 9);  // delay
+  switchesStompMode[9] = new Footswitch('8', 20, 10); // auto swell
   switchesStompMode[0]->setToggleCC(3);
   switchesStompMode[1]->setToggleCC(4);
   switchesStompMode[2]->setToggleCC(5);

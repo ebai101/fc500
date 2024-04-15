@@ -1,7 +1,7 @@
 #ifndef MODEFOOTSWITCH_H
 #define MODEFOOTSWITCH_H
 #include <Arduino.h>
-#include "Footswitch.h"
+#include <Bounce.h>
 
 class ModeFootswitch
 {
